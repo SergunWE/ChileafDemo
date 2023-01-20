@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ChileafDemo.ViewModel"
+             x:Class="ChileafDemo.MainPage">
+    <ContentPage.BindingContext>
+        <viewmodel:MainPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="Small"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20" Spacing="0">
+        <Grid RowDefinitions="3*,2*">
+            <ScrollView>
+                <StackLayout Spacing="5">
+                    <Label Text="Info" FontSize="Medium" FontAttributes="Bold"/>
+
+                    <Label Text="{Binding Name, StringFormat='Name: {0}'}"/>
+                    <Label Text="{Binding Address, StringFormat='Address: {0}'}"/>
+
+                    <Label Text="{Binding HeartRate, StringFormat='Heart rate: {0} bpm'}"/>
+                    <Label Text="{Binding BatteryLevel, StringFormat='Battery level: {0}%'}"/>
+                    <Label Text="{Binding RRIntervalsString, StringFormat='RR intervals (raw): {0}'}"/>
+                    <Label Text="{Binding EnergyExpanded, StringFormat='Energy expanded: {0}'}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding EnergyExpanded}" Value="-1">
+                                <Setter Property="Text" Value="Energy expanded not support"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Label Text="{Binding ContactDetected, StringFormat='Contact detected: {0}'}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding ContactSupport }" Value="false">
+                                <Setter Property="Text" Value="Contact detected not support"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    <Label Text="Sport info" FontSize="Medium" FontAttributes="Bold"/>
+                    <Label Text="{Binding Step, StringFormat='Step: {0}'}"/>
+                    <Label Text="{Binding Distance, StringFormat='Distance: {0}'}"/>
+                    <Label Text="{Binding Calorie, StringFormat='Calorie: {0}'}"/>
+
+                    <Label Text="Static info" FontSize="Medium" FontAttributes="Bold"/>
+                    <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}"/>
+                    <Label Text="{Binding SystemId, StringFormat='SystemId: {0}'}"/>
+                    <Label Text="{Binding ModelName, StringFormat='ModelName: {0}'}"/>
+                    <Label Text="{Binding SerialNumber, StringFormat='SerialNumber: {0}'}"/>
+                    <Label Text="{Binding FirmwareVersion, StringFormat='FirmwareVersion: {0}'}"/>
+                    <Label Text="{Binding HardwareVersion, StringFormat='HardwareVersion: {0}'}"/>
+                    <Label Text="{Binding SoftwareVersion, StringFormat='SoftwareVersion: {0}'}"/>
+                    <Label Text="{Binding VendorName, StringFormat='VendorName: {0}'}"/>
+                    <Label Text="{Binding SensorLocation, StringFormat='SensorLocation: {0}'}"/>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout Grid.Row="1" Spacing="5">
+                <Label Padding="0,10,0,0" Text="Found devices:" FontSize="Medium" FontAttributes="Bold">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding IsSearching}" Value="true">
+                            <Setter Property="Text" Value="Device search, please wait..."/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding IsSearching}" Value="false">
+                            <Setter Property="Text" Value="Found devices:"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <CollectionView
+            ItemsSource="{Binding BTDevices}"
+            SelectionMode="Single"
+            SelectedItem="{Binding CurrentDevice, Mode=TwoWay}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Spacing="0">
+                                <Label Text="{Binding Name}"/>
+                                <Label Text="{Binding Address}" FontSize="Micro"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Label Text="Device list is empty" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.Triggers>
+                        <DataTrigger TargetType="CollectionView" Binding="{Binding DeviceConnected}" Value="true">
+                            <Setter Property="SelectionMode" Value="None"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="CollectionView" Binding="{Binding DeviceConnected}" Value="false">
+                            <Setter Property="SelectionMode" Value="Single"/>
+                        </DataTrigger>
+                    </CollectionView.Triggers>
+                </CollectionView>
+            </StackLayout>
+        </Grid>
+
+        <Button VerticalOptions="EndAndExpand" Text="Search" Command="{Binding SearchCommand}"/>
+        <Button VerticalOptions="EndAndExpand" Text="Connect" Command="{Binding ConnectDisconnectCommand}">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding DeviceConnected}" Value="false">
+                    <Setter Property="Text" Value="Connect"/>
+                </DataTrigger>
+                <DataTrigger TargetType="Button" Binding="{Binding DeviceConnected}" Value="true">
+                    <Setter Property="Text" Value="Disconnect"/>
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+    </StackLayout>
+
+</ContentPage>
