@@ -45,8 +45,8 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChileafLibrary">
-      <HintPath>..\..\..\ChileafLibrary\ChileafLibrary\bin\Debug\ChileafLibrary.dll</HintPath>
+    <Reference Include="ChileafSDKAndroid">
+      <HintPath>..\..\SDK\ChileafSDKAndroid.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="System" />

@@ -1,17 +1,11 @@
-﻿
-using ChileafBleXamarin.Interfaces;
+﻿using ChileafBleXamarin.Interfaces;
 using Com.Android.Chileaf.Wear;
 using System.Collections.Generic;
 using System;
 using Xamarin.Forms;
-using static Android.Bluetooth.BluetoothClass;
 using System.Threading.Tasks;
 using ChileafBleXamarin.DataTypes;
-using Android.Content;
-using System.Threading;
-
 using System.Diagnostics;
-using ChileafDemo.Droid;
 using ChileafDemo.Droid.Chileaf;
 
 [assembly: Dependency(typeof(ApiProvider))]
